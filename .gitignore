@@ -34,6 +34,7 @@ build/
 
 # Ignore application.properties
 src/main/resources/application.properties
+src/main/resources/application-prod.properties
 
 # Ignore .env file
 .env
