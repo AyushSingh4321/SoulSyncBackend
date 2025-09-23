@@ -33,11 +33,12 @@ build/
 .vscode/
 
 # Ignore application.properties
-src/main/resources/application.properties
+# src/main/resources/application.properties
 src/main/resources/application-prod.properties
 
-# Ignore .env file
+# Ignore .env files (contain sensitive data)
 .env
+docker.env
 
 # Ignore only Testing.java file from 'user' package
 src/main/java/com/backendProject/SoulSync/user/Testing.java

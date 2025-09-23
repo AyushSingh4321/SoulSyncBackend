@@ -17,9 +17,6 @@ build/
 .DS_Store
 Thumbs.db
 
-# Ignore application.properties (since it contains sensitive data)
-src/main/resources/application.properties
-
 # Ignore documentation
 README.md
 HELP.md
@@ -28,5 +25,7 @@ HELP.md
 Dockerfile
 .dockerignore
 
-# Ignore environment files
+# Ignore environment files - KEEP .env out of Docker
 .env
+
+# Don't ignore application.properties - Docker needs it!
