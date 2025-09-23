@@ -1,0 +1,32 @@
+# Ignore Git files
+.git
+.gitignore
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Ignore build artifacts
+target/
+build/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore application.properties (since it contains sensitive data)
+src/main/resources/application.properties
+
+# Ignore documentation
+README.md
+HELP.md
+
+# Ignore Docker files
+Dockerfile
+.dockerignore
+
+# Ignore environment files
+.env
