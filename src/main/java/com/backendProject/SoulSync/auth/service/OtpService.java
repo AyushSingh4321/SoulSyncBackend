@@ -12,19 +12,25 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class OtpService
 {
-    @Autowired
-    private JavaMailSender gmailSender;
+    // @Autowired
+    // private JavaMailSender gmailSender;
     private final String ADMIN_GMAIL_ID="ayushksb11@gmail.com";
+
+    @Autowired
+    private GmailEmailService gmailEmailService; // Add this line to inject the missing service
 
     public void SendOtpToAdmin(String email)
     {
         String otp=String.format("%05d",new Random().nextInt(100000));
-        SimpleMailMessage message=new SimpleMailMessage();
-        message.setFrom(ADMIN_GMAIL_ID);
-        message.setTo(email);
-        message.setText("Your OTP for verification in SoulSync app : "+otp);
-        message.setSubject("OTP Verification");
-        gmailSender.send(message);
+        // SimpleMailMessage message=new SimpleMailMessage();
+        // message.setFrom(ADMIN_GMAIL_ID);
+        // message.setTo(email);
+        // message.setText("Your OTP for verification in SoulSync app : "+otp);
+        // message.setSubject("OTP Verification");
+        // gmailSender.send(message);
+
+        // Use Gmail API
+    gmailEmailService.sendOtpEmail(email, otp);
         saveOtp(email,otp);
     }
     @Autowired
