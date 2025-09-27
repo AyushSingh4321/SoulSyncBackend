@@ -68,10 +68,16 @@ public interface UserRepo extends JpaRepository<UserModel, Integer> {
 
 
     List<UserModel> findAllByStatus(UserStatus userStatus);
-    
+
    // Query to find users that will be deleted
     @Query("SELECT u FROM UserModel u WHERE u.deactivationReason = 1 AND u.deactivatedAt < :cutoffDate")
     List<UserModel> findUsersToDelete(@Param("cutoffDate") LocalDateTime cutoffDate);
+
+    // Remove user likes relationships where users are either liker or liked
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM user_likes WHERE liker_id IN :userIds OR liked_id IN :userIds", nativeQuery = true)
+    void removeUserLikesForUsers(@Param("userIds") List<Integer> userIds);
 
     // Remove date requests where users are either sender or receiver
     @Modifying

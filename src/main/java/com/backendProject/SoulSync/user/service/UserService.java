@@ -501,17 +501,19 @@ public class UserService {
         
         // Delete in proper order to handle foreign key constraints:
         
-        // 1. Remove chat messages (orphaned String references - no JPA relationship)
+        // 1. Remove user likes relationships (many-to-many table)
+        repo.removeUserLikesForUsers(userIds);
+        
+        // 2. Remove chat messages (orphaned String references - no JPA relationship)
         repo.removeChatMessagesForUsers(userIdStrings);
         
-        // 2. Remove chat rooms (orphaned String references - no JPA relationship)
+        // 3. Remove chat rooms (orphaned String references - no JPA relationship)
         repo.removeChatRoomsForUsers(userIdStrings);
         
-        // 3. Remove date requests (FK constraints - no JPA relationship in UserModel)
+        // 4. Remove date requests (FK constraints - no JPA relationship in UserModel)
         repo.removeDateRequestsForUsers(userIds);
         
-        // 4. Delete users - JPA will automatically handle user_likes table cleanup
-        // because it's managed by @ManyToMany relationship
+        // 5. Delete users - Now safe to delete as all references are cleaned up
         repo.deleteAllById(userIds);
         
         return usersToDelete.size();
