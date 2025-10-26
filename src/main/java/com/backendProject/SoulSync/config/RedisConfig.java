@@ -1,5 +1,6 @@
 package com.backendProject.SoulSync.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisPassword;
@@ -11,16 +12,21 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 @Configuration
 public class RedisConfig {
 
-    private static final String REDIS_HOST = "prime-midge-10750.upstash.io";
-    private static final int REDIS_PORT = 6379;
-    private static final String REDIS_PASSWORD = "ASn-AAIncDFlYTMyYTQyMTlmZGU0NTU5ODc2NTlhYzk4MWQ1Y2U0MXAxMTA3NTA";
+    @Value("${spring.redis.host:localhost}")
+    private String redisHost;
+    
+    @Value("${spring.redis.port:6379}")
+    private int redisPort;
+    
+    @Value("${spring.redis.password:}")
+    private String redisPassword;
 
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName(REDIS_HOST);
-        config.setPort(REDIS_PORT);
-        config.setPassword(RedisPassword.of(REDIS_PASSWORD));
+        config.setHostName(redisHost);
+        config.setPort(redisPort);
+        config.setPassword(RedisPassword.of(redisPassword));
 
         LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
                 .useSsl() // enable SSL
